@@ -1,0 +1,1561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academic Programs - EATM</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #228B22;
+            --secondary-color: #32CD32;
+            --accent-color: #FFD700;
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-light: #F8F9FA;
+            --bg-white: #FFFFFF;
+            --shadow-sm: 0 2px 10px rgba(0,0,0,0.1);
+            --shadow-md: 0 5px 20px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 40px rgba(0,0,0,0.1);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, #F5F7FA 0%, #E9ECEF 100%);
+            min-height: 100vh;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-white);
+            box-shadow: var(--shadow-sm);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-item {
+            position: relative;
+        }
+
+        .nav-link {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+            background: rgba(34, 139, 34, 0.1);
+        }
+
+        .nav-link.active {
+            color: var(--primary-color);
+            background: rgba(34, 139, 34, 0.1);
+        }
+
+        .nav-dropdown {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            min-width: 200px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: var(--transition);
+            margin-top: 0.5rem;
+        }
+
+        .nav-item:hover .nav-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .nav-dropdown-item {
+            display: block;
+            padding: 0.75rem 1.25rem;
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: var(--transition);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-dropdown-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .nav-dropdown-item:last-child {
+            border-radius: 0 0 12px 12px;
+            border-bottom: none;
+        }
+
+        .nav-dropdown-item:hover {
+            background: rgba(34, 139, 34, 0.1);
+            color: var(--primary-color);
+            padding-left: 1.5rem;
+        }
+
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 0.5rem;
+        }
+
+        .nav-toggle span {
+            width: 25px;
+            height: 3px;
+            background: var(--text-dark);
+            margin: 3px 0;
+            transition: var(--transition);
+            border-radius: 3px;
+        }
+
+        .nav-toggle.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .nav-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .nav-toggle.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Breadcrumb Styles */
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 0;
+            margin-top: 70px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb-item {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .breadcrumb-item:hover {
+            color: var(--primary-color);
+        }
+
+        .breadcrumb-item.active {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .breadcrumb-separator {
+            color: var(--text-light);
+            opacity: 0.5;
+        }
+
+        /* Container Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Header Styles */
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .header h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 1.5rem auto 0;
+        }
+
+        /* Programs Grid */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .program-card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .program-card:nth-child(1) { animation-delay: 0.1s; }
+        .program-card:nth-child(2) { animation-delay: 0.2s; }
+        .program-card:nth-child(3) { animation-delay: 0.3s; }
+        .program-card:nth-child(4) { animation-delay: 0.4s; }
+        .program-card:nth-child(5) { animation-delay: 0.5s; }
+        .program-card:nth-child(6) { animation-delay: 0.6s; }
+        .program-card:nth-child(7) { animation-delay: 0.7s; }
+        .program-card:nth-child(8) { animation-delay: 0.8s; }
+
+        .program-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .program-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .program-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .program-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .program-card:hover .program-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .program-icon i {
+            font-size: 1.5rem;
+            color: var(--bg-white);
+        }
+
+        .program-title {
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .program-card:hover .program-title {
+            color: var(--primary-color);
+        }
+
+        .program-description {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .program-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .program-features li {
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .program-features i {
+            color: var(--primary-color);
+            font-size: 0.8rem;
+        }
+
+        .program-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .program-btn:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 3rem;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 4rem;
+        }
+
+        .contact-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h2 {
+            font-size: 2rem;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .contact-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .contact-header p {
+            color: var(--text-light);
+            margin-top: 1.5rem;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contact-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 12px;
+            background: rgba(34, 139, 34, 0.05);
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            background: rgba(34, 139, 34, 0.1);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover .contact-icon {
+            transform: scale(1.1);
+        }
+
+        .contact-icon i {
+            font-size: 1.25rem;
+            color: var(--bg-white);
+        }
+
+        .contact-card h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .contact-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(34, 139, 34, 0.3);
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: var(--text-dark);
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            padding: 0.75rem 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(34, 139, 34, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--bg-white);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            max-width: 200px;
+            margin: 0 auto;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(34, 139, 34, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-white);
+            border-radius: 16px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        .modal-header {
+            padding: 2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            background: var(--bg-white);
+            z-index: 10;
+        }
+
+        .modal-header h2 {
+            color: var(--text-dark);
+            font-size: 1.5rem;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-close:hover {
+            background: rgba(0,0,0,0.05);
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-section {
+            margin-bottom: 2rem;
+        }
+
+        .modal-section h3 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .modal-section h3 i {
+            color: var(--primary-color);
+        }
+
+        .modal-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .modal-grid-item {
+            padding: 1rem;
+            background: rgba(34, 139, 34, 0.05);
+            border-radius: 8px;
+        }
+
+        .modal-grid-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background: var(--text-dark);
+            color: var(--bg-white);
+            padding: 3rem 0 1rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-section ul li a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-section ul li a:hover {
+            color: var(--accent-color);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--bg-white);
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent-color);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding: 1.5rem 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: var(--bg-white);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                box-shadow: var(--shadow-md);
+                padding: 2rem 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-toggle {
+                display: flex;
+            }
+
+            .nav-dropdown {
+                position: static;
+                opacity: 1;
+                visibility: visible;
+                transform: none;
+                box-shadow: none;
+                background: rgba(34, 139, 34, 0.05);
+                margin-top: 10px;
+            }
+
+            .programs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .modal-content {
+                width: 95%;
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#home" class="logo" onclick="navigateTo('home')">
+                <i class="fas fa-graduation-cap"></i>
+                EATM
+            </a>
+            
+            <button class="nav-toggle" id="navToggle" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <a href="index.html" class="nav-link" onclick="navigateTo('home')">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#academics" class="nav-link active" onclick="navigateTo('academics')">
+                        <i class="fas fa-graduation-cap"></i>
+                        Academics
+                        <i class="fas fa-chevron-down" style="font-size: 0.7rem;"></i>
+                    </a>
+                    <div class="nav-dropdown">
+                        <a href="#programs" class="nav-dropdown-item" onclick="scrollToPrograms()">All Programs</a>
+                        <a href="#cse" class="nav-dropdown-item" onclick="showProgramModal('cse')">B.tech</a>
+                        <a href="#ece" class="nav-dropdown-item" onclick="showProgramModal('ece')">Diploma</a>
+                        <a href="#me" class="nav-dropdown-item" onclick="showProgramModal('me')">+2 Science</a>
+                        <a href="#ce" class="nav-dropdown-item" onclick="showProgramModal('ce')">Pharmacey</a>
+                        <a href="#ee" class="nav-dropdown-item" onclick="showProgramModal('ee')">Nursing</a>
+                        <a href="#mba" class="nav-dropdown-item" onclick="showProgramModal('mba')">MBA</a>
+                        <a href="#mca" class="nav-dropdown-item" onclick="showProgramModal('mca')">MCA</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link" onclick="navigateTo('contact')">
+                        <i class="fas fa-envelope"></i>
+                        Contact
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb Navigation -->
+    <div class="breadcrumb">
+        <div class="breadcrumb-container">
+            <a href="index.html" class="breadcrumb-item" onclick="navigateTo('home')">
+                <i class="fas fa-home"></i> Home
+            </a>
+            <span class="breadcrumb-separator">/</span>
+            <span class="breadcrumb-item active">Academic Programs</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Header Section -->
+        <header class="header">
+            <h1>Academic Programs</h1>
+            <p>Discover our comprehensive range of undergraduate and postgraduate programs designed to shape future leaders</p>
+        </header>
+
+        <!-- Programs Grid -->
+        <section class="programs-grid" id="programs">
+            <div class="program-card" data-program="cse" onclick="showProgramModal('cse')">
+                <div class="program-icon">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="program-title">Engineering</h3>
+                <p class="program-description">Master the art of technologies</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> Computer Science Engineering</li>
+                    <li><i class="fas fa-check"></i> Mechanical Engineering</li>
+                    <li><i class="fas fa-check"></i> Electrical Engineering</li>
+                    <li><i class="fas fa-check"></i> Electrical & Electronices Engineering</li>
+                    <li><i class="fas fa-check"></i> Electrical & Communication Engineering</li>
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="ece" onclick="showProgramModal('ece')">
+                <div class="program-icon">
+                    <i class="fas fa-microchip"></i>
+                </div>
+                <h3 class="program-title">Diploma</h3>
+                <p class="program-description">Explore the world of electronics, VLSI, and communication systems & software</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> Computer Science</li>
+                    <li><i class="fas fa-check"></i> Electrical</li>
+                    <li><i class="fas fa-check"></i> Mechnical</li>
+                    <li><i class="fas fa-check"></i> Auto Mobile</li>
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="me" onclick="showProgramModal('me')">
+                <div class="program-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <h3 class="program-title">+2 Science</h3>
+                <p class="program-description">Build your carrer</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> Physices</li>
+                    <li><i class="fas fa-check"></i> Chemistrey</li>
+                    <li><i class="fas fa-check"></i> Mathmatices</li>
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="ce" onclick="showProgramModal('ce')">
+                <div class="program-icon">
+                    <i class="fas fa-building"></i>
+                </div>
+                <h3 class="program-title">Pharmacey</h3>
+                <p class="program-description">Build the future with sustainable infrastructure and smart cities</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> B.Pharm</li>
+                    <li><i class="fas fa-check"></i> D.Pharm</li>
+                
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="ee" onclick="showProgramModal('ee')">
+                <div class="program-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="program-title">Nursing</h3>
+                <p class="program-description">*Bachelor of Science in Nursing (4 years)
+                                               *General Nursing and Midwifery (3–3.5 years)
+                                               *Auxiliary Nurse Midwifery (2 years)</p>
+                <ul class="program-features">
+                   
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="mba" onclick="showProgramModal('mba')">
+                <div class="program-icon">
+                    <i class="fas fa-briefcase"></i>
+                </div>
+                <h3 class="program-title">MBA</h3>
+                <p class="program-description">Develop leadership skills and business acumen for global management</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> Business Analytics</li>
+                    <li><i class="fas fa-check"></i> Finance</li>
+                    <li><i class="fas fa-check"></i> Marketing</li>
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+            <div class="program-card" data-program="mca" onclick="showProgramModal('mca')">
+                <div class="program-icon">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="program-title">MCA</h3>
+                <p class="program-description">Advanced computer applications and software development expertise</p>
+                <ul class="program-features">
+                    <li><i class="fas fa-check"></i> Data Science</li>
+                    <li><i class="fas fa-check"></i> Cloud Computing</li>
+                    <li><i class="fas fa-check"></i> Mobile Development</li>
+                </ul>
+                <button class="program-btn">
+                    Learn More <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+
+           
+        </section>
+
+        <!-- Contact Section -->
+        <section class="contact-section" id="contact">
+            <div class="contact-header">
+                <h2>Get in Touch</h2>
+                <p>Have questions? We're here to help you choose the right program</p>
+            </div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Call Us</h3>
+                    <p>+91 8260688931</p>
+                    <button class="contact-btn" onclick="makeCall()">
+                        <i class="fas fa-phone"></i> Call Now
+                    </button>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Email Us</h3>
+                    <p>info@eatm.in</p>
+                    <button class="contact-btn" onclick="sendEmail()">
+                        <i class="fas fa-envelope"></i> Send Email
+                    </button>
+                </div>
+
+                <div class="contact-card">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <h3>WhatsApp</h3>
+                    <p>Chat with us instantly</p>
+                    <button class="contact-btn" onclick="openWhatsApp()">
+                        <i class="fab fa-whatsapp"></i> Chat Now
+                    </button>
+                </div>
+            </div>
+
+            <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label for="name">Full Name *</label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email">
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number">
+                </div>
+
+                <div class="form-group">
+                    <label for="program">Program of Interest</label>
+                    <select id="program" name="program" style="width: 100%; padding: 12px 20px; border: 2px solid #e0e0e0; border-radius: 10px; font-size: 1rem;">
+                        <option value="">Select a program</option>
+                        <option value="cse">Engineering</option>
+                        <option value="ece">Diploma</option>
+                        <option value="me">+2 Science</option>
+                        <option value="ce">Pharmacey</option>
+                        <option value="ee">Nursing</option>
+                        <option value="mba">MBA</option>
+                        <option value="mca">MCA</option>
+                        
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" required placeholder="Tell us about your interests and questions..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </form>
+        </section>
+    </div>
+
+    <!-- Program Details Modal -->
+    <div class="modal" id="programModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Program Details</h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be dynamically inserted -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About EATM</h3>
+                <p>Einstein Group Of Institution is a institution committed to excellence in technical education and research.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home" onclick="navigateTo('home')">Home</a></li>
+                    <li><a href="#academics" onclick="navigateTo('academics')">Academics</a></li>
+                    <li><a href="#contact" onclick="navigateTo('contact')">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Programs</h3>
+                <ul>
+                    <li><a href="#" onclick="showProgramModal('cse')">Engineering</a></li>
+                    <li><a href="#" onclick="showProgramModal('ece')">Diploma</a></li>
+                    <li><a href="#" onclick="showProgramModal('mba')">MBA</a></li>
+                    <li><a href="#" onclick="showProgramModal('mca')">MCA</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Contact Info</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Baniatangi,khordha</p>
+                <p><i class="fas fa-phone"></i> +91 8260688931</p>
+                <p><i class="fas fa-envelope"></i> info@eatm.in</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2026 EATM. All rights reserved. | Designed with <i class="fas fa-heart" style="color: #e74c3c;"></i> for future leaders</p>
+        </div>
+    </footer>
+
+    <script>
+        // Program Details Data
+        const programDetails = {
+            cse: {
+                title: 'Engineering',
+                icon: 'fa-laptop-code',
+                description: 'Our Engineering program is designed to create next-generation software & hardware engineers and tech innovators.',
+                highlights: [
+                    'State-of-the-art labs with latest software and hardware',
+                    'Industry collaborations with top tech companies',
+                    'Regular hackathons and coding competitions',
+                    'Internship opportunities in leading MNCs'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Data Structures & Algorithms', 'Operating Systems', 'Database Management', 'Computer Networks'] },
+                    { title: 'Specializations', items: ['AI & Machine Learning', 'Cloud Computing', 'IOT', 'Blockchain Technology'] },
+                    { title: 'Practical Labs', items: ['Programming Lab', 'AI Lab', 'Mechanical Lab', 'Electrical Lab'] }
+                ],
+                career: [
+                    'Software Engineer',
+                    'Electrical Engineer',
+                    'AI/ML Engineer',
+                    'Cloud Architect',
+                    'Cybersecurity Analyst',
+                    'Full Stack Developer'
+                ],
+                eligibility: '10+2 with PCM (Physics, Chemistry, Mathematics) with minimum 60% marks',
+                duration: '4 Years (7 Semesters)'
+            },
+            ece: {
+                title: 'Diploma',
+                icon: 'fa-microchip',
+                description: 'This program focuses on electronic devices, circuits, and communication equipment & software',
+                highlights: [
+                    'Advanced VLSI design lab',
+                    '5G and wireless communication research center',
+                    'Computer Lab',
+                    'Mechnical Lab'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Digital Electronics', 'Analog Circuits', 'Java', 'Database'] },
+                    { title: 'Specializations', items: ['VLSI Design', 'Auto Mobile', 'Wireless Communication', 'IoT'] },
+                    { title: 'Practical Labs', items: ['Electronics Lab', 'Communication Lab', 'VLSI Lab', 'Computer Lab'] }
+                ],
+                career: [
+                    'Electronics Engineer',
+                    'FullStack Developer',
+                    'Communication Engineer',
+                    'Mechanical Engineer',
+                    'Electrical Engineer',
+                    'IoT Developer'
+                ],
+                eligibility: '10th pass',
+                duration: '3 Years (6 Semesters)'
+            },
+            me: {
+                title: '+2 Science',
+                icon: 'fa-cogs',
+                description: 'Build Carrier',
+                highlights: [
+                    'Physices Lab',
+                    'software lab',
+                    'Robotics and automation center',
+                    'Chemistrey Lab'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Thermodynamics', 'Fluid Mechanics', 'Ohms law', 'Manufacturing Processes'] },
+                    { title: 'Specializations', items: ['Automotive Engineering', 'Robotics', 'Thermal Engineering', 'CAD/CAM'] },
+                    { title: 'Practical Labs', items: ['Workshop', 'IT Lab', 'Thermal Lab', 'Chemistrey Lab'] }
+                ],
+                career: [
+                    'Engineering',
+                    'Design Engineer',
+                    'Diploma',
+                    'Banking',
+                    'Robotics Engineer',
+                    
+                ],
+                eligibility: '10th pass',
+                duration: '2 Years'
+            },
+            ce: {
+                title: 'Pharmacey',
+                icon: 'fa-building',
+                description: 'Build carrier',
+                highlights: [
+                    'Design lab',
+                    'Diffrent lab',
+                    'Chemical testing',
+                    'Microscope work'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Human Anatomy & Physiology', 'Pharmaceutical Analysis', 'Pharmaceutics'] },
+                    { title: 'Specializations', items: ['Pharmaceutical Inorganic Chemistry', 'Management'] },
+                    { title: 'Practical Labs', items: ['Biochemistry Lab', 'Microbiology Lab'] }
+                ],
+                career: [
+                    'Pharmacist (Medical Store)',
+                    'Drug Inspector',
+                    'Quality Control Analyst',
+                    'Research Scientist',
+                   
+                ],
+                eligibility: '10+2 with PCB (Physics, Chemistry, Biology) with minimum 60% marks',
+                duration: '4 Years (8 Semesters)'
+            },
+            ee: {
+                title: 'Nursing',
+                icon: 'fa-bolt',
+                description: 'Build Carrier.',
+                highlights: [
+                    'High voltage lab',
+                    'Power system simulation center',
+                    'Renewable energy research facility',
+                    'Smart grid testing lab'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Anatomy', 'Biochemistry', 'Nutrition'] },
+                    { title: 'Specializations', items: ['Nursing Management', 'Mental Health Nursing'] },
+                    { title: 'Practical Labs', items: ['Nursing Foundation Lab', 'Anatomy & Physiology Lab'] }
+                ],
+                career: [
+                    'Staff Nurse (Hospital)',
+                    'ICU Nurse',
+                    'Community Health Nurse',
+                   
+                ],
+                eligibility: '10+2 with PCB (Physics, Chemistry, Biology)',
+                duration: '4 Years (8 Semesters)'
+            },
+            mba: {
+                title: 'Master of Business Administration (MBA)',
+                icon: 'fa-briefcase',
+                description: 'MBA program develops business leadership and management skills with industry exposure.',
+                highlights: [
+                    'Case study-based learning',
+                    'Industry mentorship program',
+                    'International exchange programs',
+                    'Startup incubation center'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Business Strategy', 'Financial Management', 'Marketing Management', 'Operations Management'] },
+                    { title: 'Specializations', items: ['Finance', 'Marketing', 'HR', 'Business Analytics'] },
+                    { title: 'Practical Learning', items: ['Case Studies', 'Internships', 'Live Projects', 'Business Simulations'] }
+                ],
+                career: [
+                    'Business Manager',
+                    'Management Consultant',
+                    'Financial Analyst',
+                    'Marketing Manager',
+                    'HR Manager',
+                    'Business Analyst'
+                ],
+                eligibility: 'Bachelor\'s degree with minimum 50% marks + valid entrance score',
+                duration: '2 Years (4 Semesters)'
+            },
+            mca: {
+                title: 'Master of Computer Applications (MCA)',
+                icon: 'fa-database',
+                description: 'MCA program provides advanced knowledge in computer applications and software development.',
+                highlights: [
+                    'Advanced computing lab',
+                    'Software development center',
+                    'Industry-sponsored projects',
+                    'Research opportunities in emerging tech'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Advanced Programming', 'Software Engineering', 'Database Systems', 'Web Technologies'] },
+                    { title: 'Specializations', items: ['Data Science', 'Cloud Computing', 'Mobile Development', 'Enterprise Software'] },
+                    { title: 'Practical Labs', items: ['Programming Lab', 'Database Lab', 'Web Development Lab', 'Project Lab'] }
+                ],
+                career: [
+                    'Software Developer',
+                    'System Analyst',
+                    'Database Administrator',
+                    'Web Developer',
+                    'App Developer',
+                    'IT Consultant'
+                ],
+                eligibility: 'Bachelor\'s degree with Mathematics at 10+2 or graduation level',
+                duration: '3 Years (6 Semesters)'
+            },
+            bt: {
+                title: 'B.Tech Biotechnology',
+                icon: 'fa-dna',
+                description: 'Biotechnology program combines biology with technology for innovative solutions in healthcare and agriculture.',
+                highlights: [
+                    'Advanced biotech lab',
+                    'Genetic engineering facility',
+                    'Pharmaceutical research center',
+                    'Bioinformatics lab'
+                ],
+                curriculum: [
+                    { title: 'Core Subjects', items: ['Molecular Biology', 'Genetic Engineering', 'Bioprocess Technology', 'Biochemistry'] },
+                    { title: 'Specializations', items: ['Medical Biotechnology', 'Industrial Biotech', 'Agricultural Biotech', 'Bioinformatics'] },
+                    { title: 'Practical Labs', items: ['Molecular Biology Lab', 'Tissue Culture Lab', 'Fermentation Lab', 'Bioinformatics Lab'] }
+                ],
+                career: [
+                    'Biotech Engineer',
+                    'Research Scientist',
+                    'Quality Control Analyst',
+                    'Bioinformatics Specialist',
+                    'Process Engineer',
+                    'R&D Scientist'
+                ],
+                eligibility: '10+2 with PCB/PCM with minimum 60% marks',
+                duration: '4 Years (8 Semesters)'
+            }
+        };
+
+        // Navigation Functions
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('navMenu');
+            const navToggle = document.getElementById('navToggle');
+            navMenu.classList.toggle('active');
+            navToggle.classList.toggle('active');
+        }
+
+        function navigateTo(page) {
+            // Close mobile menu if open
+            const navMenu = document.getElementById('navMenu');
+            const navToggle = document.getElementById('navToggle');
+            navMenu.classList.remove('active');
+            navToggle.classList.remove('active');
+
+            // Update active nav link
+            const allNavLinks = document.querySelectorAll('.nav-link');
+            allNavLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${page}`) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Handle navigation
+            if (page === 'home') {
+                window.location.href = '#home';
+            } else if (page === 'academics') {
+                scrollToPrograms();
+            } else if (page === 'contact') {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function scrollToPrograms() {
+            document.getElementById('programs').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Modal Functions
+        function showProgramModal(programKey) {
+            const details = programDetails[programKey];
+            if (!details) return;
+
+            const modal = document.getElementById('programModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+
+            modalTitle.textContent = details.title;
+            
+            modalBody.innerHTML = `
+                <div class="modal-section">
+                    <h3><i class="fas ${details.icon}"></i> About the Program</h3>
+                    <p>${details.description}</p>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-star"></i> Program Highlights</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        ${details.highlights.map(h => `<li style="margin-bottom: 10px; color: #666;"><i class="fas fa-check-circle" style="color: var(--primary-color); margin-right: 10px;"></i>${h}</li>`).join('')}
+                    </ul>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-book"></i> Curriculum</h3>
+                    <div class="modal-grid">
+                        ${details.curriculum.map(c => `
+                            <div class="modal-grid-item">
+                                <h4>${c.title}</h4>
+                                <ul style="list-style: none; padding: 0; margin: 0;">
+                                    ${c.items.map(i => `<li style="color: #666; font-size: 0.9rem; margin-bottom: 5px;">• ${i}</li>`).join('')}
+                                </ul>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-briefcase"></i> Career Opportunities</h3>
+                    <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        ${details.career.map(c => `<span style="padding: 8px 15px; background: rgba(34, 139, 34, 0.1); color: var(--primary-color); border-radius: 20px; font-size: 0.9rem;">${c}</span>`).join('')}
+                    </div>
+                </div>
+                
+                <div class="modal-section">
+                    <h3><i class="fas fa-info-circle"></i> Program Details</h3>
+                    <div class="modal-grid">
+                        <div class="modal-grid-item">
+                            <h4>Eligibility</h4>
+                            <p>${details.eligibility}</p>
+                        </div>
+                        <div class="modal-grid-item">
+                            <h4>Duration</h4>
+                            <p>${details.duration}</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button onclick="closeModal()" style="padding: 12px 30px; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; border: none; border-radius: 25px; font-size: 1rem; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-times"></i> Close
+                    </button>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('programModal');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Contact Functions
+        function makeCall() {
+            window.location.href = 'tel:+916742558245';
+        }
+
+        function sendEmail() {
+            window.location.href = 'mailto:info@eatm.in';
+        }
+
+        function openWhatsApp() {
+            const phoneNumber = '916742558245';
+            const message = 'Hi, I would like to know more about EATM programs.';
+            window.open(`https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Form Submission
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Reset form
+            event.target.reset();
+            
+            // Here you would normally send the data to a server
+            console.log('Form submitted:', data);
+        }
+
+        // Utility Functions
+        function showMessage(message) {
+            console.log(message);
+        }
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Close modal on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Close modal on background click
+        document.getElementById('programModal').addEventListener('click', (e) => {
+            if (e.target.id === 'programModal') {
+                closeModal();
+            }
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            const navMenu = document.getElementById('navMenu');
+            const navToggle = document.getElementById('navToggle');
+            
+            if (!navMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                navMenu.classList.remove('active');
+                navToggle.classList.remove('active');
+            }
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('EATM Academic Programs Page Loaded');
+        });
+    </script>
+</body>
+</html>
